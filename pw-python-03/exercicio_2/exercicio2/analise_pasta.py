@@ -1,5 +1,9 @@
 import os
-import csv #Para escrever no ficheiro .csv
+#Para escrever no ficheiro .csv
+import csv
+# O modulo matplotlib permite fazer desenho de gráficos
+from matplotlib import pyplot as plt
+
 
 def pede_pasta():
     pasta_dir = input("Este programa analisa o tipo de ficheiros presente numa pasta. Insira o caminho para uma pasta:")
@@ -7,18 +11,17 @@ def pede_pasta():
         print("o que inseriu nao e uma pasta !")
 
 
-def faz_calculos():
+def faz_calculos(nome_ficheiro):
     dict = {}
-    filename = "C:/Users/Nuno Caetano/Desktop/Escola/SegundoSemestre/Programacao_Web/Teorica/"
-    for nome in os.listdir(filename):
+    for nome in os.listdir(nome_ficheiro):
         nome = os.path.splitext(nome)
 
         if nome[1] not in dict:
-            dict[nome[1]] = {'quantidade': 1, 'volume': int(os.path.getsize(filename + nome[0] + nome[1]) / (1024))}
+            dict[nome[1]] = {'quantidade': 1, 'volume': int(os.path.getsize(nome_ficheiro + nome[0] + nome[1]) / (1024))}
         else:
             dict[nome[1]]['quantidade'] += 1
-            dict[nome[1]]['volume'] += int(os.path.getsize(filename + nome[0] + nome[1]) / (1024))
-
+            dict[nome[1]]['volume'] += int(os.path.getsize(nome_ficheiro + nome[0] + nome[1]) / (1024))
+    print('Os resultados foram guardados no ficheiro `varios.csv`')
     return dict
 
 
@@ -28,13 +31,19 @@ def guarda_resultados():
         campos = ['Extensao','Quantidade','Tamanho[kByte]']
         writer = csv.DictWriter(ficheiro, fieldnames=campos)
         writer.writeheader()
-
-        for elemento,valor in faz_calculos().values():
-            print(elemento,valor)
-
-def faz_grafico_queijos():
-    print("grafico")
+        for chave in faz_calculos().keys():
+            writer.writerow({'Extensao': chave,
+                             'Quantidade':faz_calculos().get(chave)['quantidade'],
+                             'Tamanho[kByte]':faz_calculos().get(chave)['volume']})
 
 
-def faz_grafico_barras():
-    print("lollllll")
+def faz_grafico_queijos(titulo, lista_chaves, lista_valores):
+    plt.pie(lista_valores, labels=lista_chaves, autopct='%1.0f%%')
+    plt.title(titulo)
+    plt.show()
+
+
+def faz_grafico_barras(titulo, lista_chaves, lista_valores):
+    plt.bar(lista_chaves, lista_valores)
+    plt.title(titulo)
+    plt.show()
