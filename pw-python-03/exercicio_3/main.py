@@ -1,18 +1,28 @@
 import os
+from exercicio_2.analise_pasta import *
 
+
+
+#funcao recursiva
 def calcula_tamanho_pasta(pasta):
+    "funcao Recursiva que calcula o tamanho total da diretoria"
     soma = 0
+    for entry in os.scandir(pasta):
+        if entry.is_file():
+            soma += os.path.getsize(entry)
+        elif entry.is_dir():
+            soma += calcula_tamanho_pasta(entry.path)
+    return soma
 
-    for elemento in os.listdir(pasta):
-        caminho_absoluto = os.path.join(pasta,elemento)
 
-        if os.path.isfile(caminho_absoluto):
-            soma += os.path.getsize(caminho_absoluto)
-        if os.path.isdir(caminho_absoluto):
-            soma = soma + calcula_tamanho_pasta(pasta)
-    else:
-        return soma
 
 
 if __name__=="__main__":
-    calcula_tamanho_pasta('C:/Users/Nuno Caetano/Desktop/Escola/SegundoSemestre/Programacao_Web/pw-python')
+    nome = pede_pasta()
+    while not os.path.isdir(nome):
+        nome = input("digite um diretorio correto pff:")
+        if os.path.isdir(nome):
+            break
+
+    tamanho = calcula_tamanho_pasta(nome)
+    print(f"Tamanho Total = {tamanho / 1048576} MBytes")

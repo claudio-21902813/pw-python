@@ -9,6 +9,7 @@ def pede_pasta():
     pasta_dir = input("Este programa analisa o tipo de ficheiros presente numa pasta. Insira o caminho para uma pasta:")
     if not os.path.isdir(pasta_dir):
         print("o que inseriu nao e uma pasta !")
+    return pasta_dir
 
 
 def faz_calculos(nome_ficheiro):
