@@ -2,7 +2,7 @@ from exercicio_4.Automovel import Automovel
 
 __TEXTO = "1... criar Automovel\n2...abastecer carro\n3... percorrer\n4...mostra autonomia\n5... Sair"
 
-
+"""
 if __name__ == '__main__':
         carro = None
         print(__TEXTO)
@@ -23,4 +23,11 @@ if __name__ == '__main__':
                         print(carro.autonomia())
                 else:
                         break
-                opcao = eval(input("Escolha Opcao:"))
+                opcao = eval(input("Escolha Opcao:"))"""
+
+if __name__=="__main__":
+        a1 = Automovel(60, 10, 15)
+        print(a1.autonomia())
+        print(a1.abastece(45))
+        print(a1.percorre(150))
+        print(a1.percorre(250))

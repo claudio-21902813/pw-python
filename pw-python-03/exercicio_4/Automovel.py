@@ -36,8 +36,13 @@ class Automovel():
     def percorre(self,n_km):
         """ percorre n_km Km, desde que a quantidade de combustível no depósito o permita,
         em caso contrário gera um erro e o trajecto não é efectuado. Retorna a autonomia."""
-        print(".-._._._._._.-._._.-_+_" + "\U0001F697" + " .-._._._._._.-._._.-")
-        return self.autonomia() - n_km
+
+        litros_necessarios = n_km / self.consumo
+
+        if litros_necessarios < self.consumo:
+            return self.autonomia() - n_km
+        else:
+            return -1
 
     @classmethod
     def cria_automovel(cls,cap,qtd,consumo):
